@@ -1,82 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+table{
+background:#000000;
+
+}
+table td{
+background:#ffffff;
+}
+.v0{
+width:20px;
+height:20px;
+background:#cccccc;
+margin:1px;
+}
+.v1{
+width:20px;
+height:20px;
+background:#000000;
+margin:1px;
+}
+</style>
+<body>
+<table id="clock"  padding="0" spacing="1"  >
+
+</table>
+</body>
+
 <script>
-function dec2bin(num){ 
-    if(isNaN(num))return; 
-    return parseInt(num,10).toString(2); 
+var clock = document.getElementById("clock");
+var tr = document.createElement("tr");
+clock.appendChild(tr);
+
+var addLed = function(id,id2){
+    var word = document.getElementById(id);
+    var led = document.createElement("div");
+    led.setAttribute("id",id2);
+    led.setAttribute("class","v0");
+    word.appendChild(led);
+}
+
+var addWord = function (id){
+
+    var td = document.createElement("td");
+    td.setAttribute("id",id);
+    tr.appendChild(td);
+    addLed(id,id+"1");
+    addLed(id,id+"2");
+    addLed(id,id+"3");
+    addLed(id,id+"4");
+}
+
+function dec2bin(num){
+    if(isNaN(num))return;
+    return parseInt(num,10).toString(2);
 }
 function pad(num, n) {
-  //alert(n>num);  
-  return Array(n>(''+num).length?(n-(''+num).length+1):0).join(0)+num;  
-} 
+  //alert(n>num);
+  return Array(n>(''+num).length?(n-(''+num).length+1):0).join(0)+num;
+}
 
-function getTime(){
+var setWord=function(id,word){
+    var leds = document.getElementById(id).childNodes;
+    word = pad(dec2bin(word),4);
+    for(var i=0;i<leds.length;i++){
+        var v = word.substr(i,1);
+        leds[i].setAttribute("class","v"+v);
+    }
+}
+
+var showClock=function(){
+    addWord("h1");
+    addWord("h2");
+    addWord("m1");
+    addWord("m2");
+    addWord("s1");
+    addWord("s2");
+    setWord("h1",2);
+};
+
+function showTime(){
     var now = new Date();
     var h = now.getHours();
     var m = now.getMinutes();
     var s = now.getSeconds();
-    var ret = h+":"+m+":"+s;
     var t1,t2,t3,t4,t5,t6;
-    var b1,b2,b3,b4,b5,b6;
     t1 = Math.floor(h/10);
     t2 = h%10;
     t3 = Math.floor(m/10);
     t4 = m%10;
     t5 = Math.floor(s/10);
     t6 = s%10;
-    b1 = pad(dec2bin(t1)*1,4);
-    b2 = pad(dec2bin(t2)*1,4);
-    b3 = pad(dec2bin(t3)*1,4);
-    b4 = pad(dec2bin(t4)*1,4);
-    b5 = pad(dec2bin(t5)*1,4);
-    b6 = pad(dec2bin(t6)*1,4);
-    document.getElementById("time").innerHTML = b1+" "+b2+":"+b3+" "+b4+":"+b5+" "+b6;
-    document.getElementById("time2").innerHTML = t1+""+t2+":"+t3+t4+":"+t5+t6;
+    setWord("h1",t1);
+    setWord("h2",t2);
+    setWord("m1",t3);
+    setWord("m2",t4);
+    setWord("s1",t5);
+    setWord("s2",t6);
 }
-setInterval('getTime()',1000);
+
+showClock();
+setInterval('showTime()',1000);
 </script>
-<style>
-.digit {
-    width:120px;
-}
-.digit div{
-    border:1px solid black;
-    width:18px;
-    float:left;
-}
-.digit div.v1{
-    background:#000000;
-}
-.clean{
-    clear:both;
-}
-</style>
-<h3 id="time"></h3>
-<h3 id="time2"></h2>
-<div class="digit">
-<div id="d11">&nbsp;</div>
-<div id="d12">&nbsp;</div>
-<div id="d13">&nbsp;</div>
-<div id="d14">&nbsp;</div>
-<div id="d15">&nbsp;</div>
-<div id="d16">&nbsp;</div>
 
-<div id="d21">&nbsp;</div>
-<div id="d22">&nbsp;</div>
-<div id="d23">&nbsp;</div>
-<div id="d24">&nbsp;</div>
-<div id="d25">&nbsp;</div>
-<div id="d26">&nbsp;</div>
-
-<div id="d31">&nbsp;</div>
-<div id="d32">&nbsp;</div>
-<div id="d33">&nbsp;</div>
-<div id="d34">&nbsp;</div>
-<div id="d35">&nbsp;</div>
-<div id="d36">&nbsp;</div>
-
-<div id="d41">&nbsp;</div>
-<div id="d42">&nbsp;</div>
-<div id="d43">&nbsp;</div>
-<div id="d44">&nbsp;</div>
-<div id="d45">&nbsp;</div>
-<div id="d46">&nbsp;</div>
-</div>
+</html>
