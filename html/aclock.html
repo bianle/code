@@ -29,6 +29,20 @@ margin:1px;
 </body>
 
 <script>
+ /*
+  *  10进制转2进制
+  */
+function dec2bin(num){
+    if(isNaN(num))return;
+    return parseInt(num,10).toString(2);
+}
+/*
+ *  左补齐
+ */
+function pad(num, n) {
+  //alert(n>num);
+  return Array(n>(''+num).length?(n-(''+num).length+1):0).join(0)+num;
+}
 var clock = document.getElementById("clock");
 var tr = document.createElement("tr");
 clock.appendChild(tr);
@@ -42,7 +56,6 @@ var addLed = function(id,id2){
 }
 
 var addWord = function (id){
-
     var td = document.createElement("td");
     td.setAttribute("id",id);
     tr.appendChild(td);
@@ -50,15 +63,6 @@ var addWord = function (id){
     addLed(id,id+"2");
     addLed(id,id+"3");
     addLed(id,id+"4");
-}
-
-function dec2bin(num){
-    if(isNaN(num))return;
-    return parseInt(num,10).toString(2);
-}
-function pad(num, n) {
-  //alert(n>num);
-  return Array(n>(''+num).length?(n-(''+num).length+1):0).join(0)+num;
 }
 
 var setWord=function(id,word){
@@ -70,7 +74,7 @@ var setWord=function(id,word){
     }
 }
 
-var showClock=function(){
+var getClock=function(){
     addWord("h1");
     addWord("h2");
     addWord("m1");
@@ -100,7 +104,7 @@ function showTime(){
     setWord("s2",t6);
 }
 
-showClock();
+getClock();
 setInterval('showTime()',1000);
 </script>
 
