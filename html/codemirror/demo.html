@@ -1,0 +1,37 @@
+<script src="codemirror/lib/codemirror.js"></script>
+<script src="codemirror/mode/javascript/javascript.js"></script>
+<script src="codemirror/mode/xml/xml.js"></script>
+<script src="codemirror/mode/htmlmixed/htmlmixed.js"></script>
+<script src="codemirror/addon/selection/active-line.js"></script>
+<script src="codemirror/addon/edit/matchbrackets.js"></script>
+
+<link rel="stylesheet" href="codemirror/lib/codemirror.css">
+<link rel="stylesheet" href="codemirror/theme/the-matrix.css">
+<script src="jquery/jquery.js"></script>
+<textarea id="code">
+<script>
+var sayHello= function(){
+	alert("hello word!");
+};
+</script>
+<h1>demo</h1>
+<button onclick="sayHello()">click</button>
+</textarea>
+<script>
+var myCodeMirror =CodeMirror.fromTextArea(document.getElementById("code"), {
+	lineNumbers: true,
+	mode: 'htmlmixed',
+	styleActiveLine: true,
+	matchBrackets: true
+  });
+myCodeMirror.setOption("theme","the-matrix");
+function run(){
+	var temp = myCodeMirror.doc.getValue();
+	var win= open("", "run","status=no,menubar=yes,toolbar=no");
+	win.document.open();
+	win.document.write(temp);
+	win.document.close();
+
+}
+</script>
+<input type="button" value="Ô¤ÀÀ" onclick="run();" /> 
